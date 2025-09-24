@@ -6,7 +6,11 @@
   "scripts": {
     "build": "tsc && cp ui.html dist/ && cp manifest.json dist/",
     "dev": "tsc --watch",
-    "server": "node server.js"
+    "server": "node server.js",
+    "test": "node test-server.js",
+    "start": "npm run build && npm run server",
+    "clean": "rm -rf dist node_modules",
+    "package": "npm run build && zip -r instaffo-copywriter.zip manifest.json dist/ README.md"
   },
   "keywords": ["figma", "plugin", "copywriting", "ai", "openai"],
   "author": "Instaffo",
