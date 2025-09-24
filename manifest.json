@@ -1,5 +1,31 @@
 {
   "name": "Instaffo Copywriter",
+  "id": "instaffo-copywriter",
+  "api": "1.0.0",
+  "main": "code.js",
+  "ui": "ui.html",
+  "capabilities": ["selection"],
+  "enableProposedApi": false,
+  "editorType": ["figma"],
+  "networkAccess": {
+    "allowedDomains": ["https://api.openai.com", "http://localhost:3001"]
+  },
+  "permissions": ["currentuser"],
+  "parameters": [
+    {
+      "name": "Auto-fill",
+      "key": "autofill",
+      "description": "Auto-fill selected text elements with AI-generated copy"
+    }
+  ],
+  "menu": [
+    {
+      "name": "Open Copywriter",
+      "command": "open-copywriter"
+    }
+  ]
+}
+=======
   "id": "instaffo-copywriter-plugin",
   "api": "1.0.0",
   "main": "dist/code.js",
