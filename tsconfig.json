@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "ES2019",
+    "module": "AMD",
+    "outFile": "dist/code.js",
+    "strict": true,
+    "esModuleInterop": true,
+    "lib": ["ES2019"],
+    "types": ["@figma/plugin-typings"],  
+    "skipLibCheck": true                  
+  },
+  "include": ["code.ts"]
+}
