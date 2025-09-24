@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Instaffo Copywriter</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 12px;
+            line-height: 1.4;
+            color: #333;
+            background: #fff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            padding: 16px;
+            max-width: 400px;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e1e5e9;
+        }
+
+        .logo {
+            font-weight: 600;
+            font-size: 14px;
+            color: #1a73e8;
+        }
+
+        .language-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 40px;
+            height: 20px;
+            background: #ddd;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .toggle-switch.active {
+            background: #1a73e8;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 16px;
+            height: 16px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        .toggle-switch.active .toggle-slider {
+            transform: translateX(20px);
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 16px;
+            border-bottom: 1px solid #e1e5e9;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 8px 12px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 12px;
+            color: #666;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .tab.active {
+            color: #1a73e8;
+            border-bottom-color: #1a73e8;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 4px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 12px;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #1a73e8;
+            box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px 16px;
+            background: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background: #1557b0;
+        }
+
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .btn-secondary:hover {
+            background: #e9ecef;
+        }
+
+        .selection-info {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+            font-size: 11px;
+            color: #666;
+        }
+
+        .selection-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .selection-item:last-child {
+            border-bottom: none;
+        }
+
+        .selection-text {
+            flex: 1;
+            font-size: 11px;
+            color: #333;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-right: 8px;
+        }
+
+        .placeholders-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .placeholder-item {
+            padding: 8px 12px;
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 11px;
+            transition: all 0.2s;
+        }
+
+        .placeholder-item:hover {
+            background: #e9ecef;
+        }
+
+        .placeholder-item.selected {
+            background: #1a73e8;
+            color: white;
+            border-color: #1a73e8;
+        }
+
+        .results-container {
+            margin-top: 16px;
+        }
+
+        .result-item {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 12px;
+        }
+
+        .result-text {
+            font-size: 12px;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+
+        .result-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-sm {
+            padding: 4px 8px;
+            font-size: 10px;
+            flex: 1;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+        }
+
+        .empty-state-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+            opacity: 0.5;
+        }
+
+        .login-form {
+            max-width: 300px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .login-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .login-subtitle {
+            color: #666;
+        }
+
+        .error-message {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #dc2626;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 11px;
+            margin-bottom: 12px;
+        }
+
+        .success-message {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            color: #16a34a;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 11px;
+            margin-bottom: 12px;
+        }
+
+        .advanced-settings {
+            background: #f8f9fa;
+            border: 1px solid #e1e5e9;
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 16px;
+        }
+
+        .settings-row {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .settings-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .settings-col {
+            flex: 1;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #e1e5e9;
+            border-radius: 50%;
+            border-top-color: #1a73e8;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div id="loginScreen" class="container">
+        <div class="login-form">
+            <div class="login-header">
+                <div class="login-title">Instaffo Copywriter</div>
+                <div class="login-subtitle">Sign in to access AI copywriting</div>
+            </div>
+            
+            <div id="loginError" class="error-message hidden"></div>
+            
+            <div class="form-group">
+                <label for="loginEmail">Email</label>
+                <input type="email" id="loginEmail" placeholder="your@email.com" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="loginPassword">Password</label>
+                <input type="password" id="loginPassword" placeholder="Your password" required>
+            </div>
+            
+            <button id="loginBtn" class="btn">Sign In</button>
+        </div>
+    </div>
+
+    <div id="mainApp" class="container hidden">
+        <div class="header">
+            <div class="logo">Instaffo Copywriter</div>
+            <div class="language-toggle">
+                <span>EN</span>
+                <div class="toggle-switch" id="languageToggle">
+                    <div class="toggle-slider"></div>
+                </div>
+                <span>DE</span>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" data-tab="generate">Generate</button>
+            <button class="tab" data-tab="placeholders">Placeholders</button>
+            <button class="tab" data-tab="results">Results</button>
+        </div>
+
+        <!-- Generate Tab -->
+        <div id="generateTab" class="tab-content active">
+            <div id="selectionInfo" class="selection-info">
+                <div>📝 <span id="selectionCount">0</span> text elements selected</div>
+                <div id="selectionDetails"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="customInput">Custom Text Input</label>
+                <textarea id="customInput" placeholder="Enter your text here or use selected elements..."></textarea>
+            </div>
+
+            <div class="advanced-settings">
+                <label>Advanced Settings</label>
+                <div class="settings-row">
+                    <div class="settings-col">
+                        <label for="toneSelect">Tone</label>
+                        <select id="toneSelect">
+                            <option value="professional">Professional</option>
+                            <option value="casual">Casual</option>
+                            <option value="friendly">Friendly</option>
+                            <option value="formal">Formal</option>
+                            <option value="playful">Playful</option>
+                            <option value="urgent">Urgent</option>
+                        </select>
+                    </div>
+                    <div class="settings-col">
+                        <label for="lengthSelect">Length</label>
+                        <select id="lengthSelect">
+                            <option value="short">Short</option>
+                            <option value="medium">Medium</option>
+                            <option value="long">Long</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="targetingInput">Target Audience</label>
+                    <input type="text" id="targetingInput" placeholder="e.g., young professionals, parents, tech enthusiasts">
+                </div>
+            </div>
+
+            <button id="generateBtn" class="btn">Generate Copy 🚀</button>
+        </div>
+
+        <!-- Placeholders Tab -->
+        <div id="placeholdersTab" class="tab-content">
+            <div class="placeholders-grid">
+                <div class="placeholder-item" data-placeholder="headline">Headline</div>
+                <div class="placeholder-item" data-placeholder="subheading">Subheading</div>
+                <div class="placeholder-item" data-placeholder="cta">Call to Action</div>
+                <div class="placeholder-item" data-placeholder="description">Description</div>
+                <div class="placeholder-item" data-placeholder="benefit">Key Benefit</div>
+                <div class="placeholder-item" data-placeholder="feature">Feature</div>
+                <div class="placeholder-item" data-placeholder="testimonial">Testimonial</div>
+                <div class="placeholder-item" data-placeholder="pricing">Pricing</div>
+                <div class="placeholder-item" data-placeholder="social-proof">Social Proof</div>
+                <div class="placeholder-item" data-placeholder="urgency">Urgency</div>
+                <div class="placeholder-item" data-placeholder="guarantee">Guarantee</div>
+                <div class="placeholder-item" data-placeholder="contact">Contact Info</div>
+                <div class="placeholder-item" data-placeholder="disclaimer">Disclaimer</div>
+                <div class="placeholder-item" data-placeholder="tagline">Tagline</div>
+            </div>
+            <button id="insertPlaceholderBtn" class="btn" disabled>Insert Selected</button>
+        </div>
+
+        <!-- Results Tab -->
+        <div id="resultsTab" class="tab-content">
+            <div id="resultsContainer">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📝</div>
+                    <div>No results yet</div>
+                    <div style="margin-top: 8px; font-size: 11px; color: #999;">
+                        Generate copy to see results here
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global state
+        let isLoggedIn = false;
+        let isGerman = false;
+        let selectedElements = [];
+        let selectedPlaceholder = null;
+        let generatedResults = [];
+        let serverUrl = 'http://localhost:3001';
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+        });
+
+        function initializeApp() {
+            // Check login status
+            checkLoginStatus();
+            
+            // Event listeners
+            setupEventListeners();
+            
+            // Request initial selection from Figma
+            parent.postMessage({ pluginMessage: { type: 'get-selection' } }, '*');
+        }
+
+        function setupEventListeners() {
+            // Login
+            document.getElementById('loginBtn').addEventListener('click', handleLogin);
+            document.getElementById('loginPassword').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') handleLogin();
+            });
+
+            // Language toggle
+            document.getElementById('languageToggle').addEventListener('click', toggleLanguage);
+
+            // Tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', () => switchTab(tab.dataset.tab));
+            });
+
+            // Generate copy
+            document.getElementById('generateBtn').addEventListener('click', generateCopy);
+
+            // Placeholders
+            document.querySelectorAll('.placeholder-item').forEach(item => {
+                item.addEventListener('click', () => selectPlaceholder(item));
+            });
+            document.getElementById('insertPlaceholderBtn').addEventListener('click', insertPlaceholder);
+        }
+
+        // Listen for messages from Figma plugin code
+        window.onmessage = (event) => {
+            const message = event.data.pluginMessage;
+            if (!message) return;
+
+            switch (message.type) {
+                case 'selection-data':
+                    handleSelectionData(message);
+                    break;
+                case 'text-applied':
+                    handleTextApplied(message);
+                    break;
+                case 'all-text-data':
+                    handleAllTextData(message);
+                    break;
+            }
+        };
+
+        // Authentication
+        function checkLoginStatus() {
+            const token = localStorage.getItem('instaffo_token');
+            if (token) {
+                // Verify token with server
+                fetch(`${serverUrl}/api/verify-token`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.valid) {
+                        showMainApp();
+                    } else {
+                        showLoginScreen();
+                    }
+                })
+                .catch(() => {
+                    showLoginScreen();
+                });
+            } else {
+                showLoginScreen();
+            }
+        }
+
+        async function handleLogin() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const errorDiv = document.getElementById('loginError');
+            const loginBtn = document.getElementById('loginBtn');
+
+            if (!email || !password) {
+                showError(errorDiv, 'Please enter both email and password');
+                return;
+            }
+
+            loginBtn.disabled = true;
+            loginBtn.textContent = 'Signing in...';
+
+            try {
+                const response = await fetch(`${serverUrl}/api/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    localStorage.setItem('instaffo_token', data.token);
+                    showMainApp();
+                } else {
+                    showError(errorDiv, data.message || 'Login failed');
+                }
+            } catch (error) {
+                showError(errorDiv, 'Connection failed. Make sure the server is running.');
+            }
+
+            loginBtn.disabled = false;
+            loginBtn.textContent = 'Sign In';
+        }
+
+        function showLoginScreen() {
+            document.getElementById('loginScreen').classList.remove('hidden');
+            document.getElementById('mainApp').classList.add('hidden');
+            isLoggedIn = false;
+        }
+
+        function showMainApp() {
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('mainApp').classList.remove('hidden');
+            isLoggedIn = true;
+        }
+
+        function showError(element, message) {
+            element.textContent = message;
+            element.classList.remove('hidden');
+            setTimeout(() => element.classList.add('hidden'), 5000);
+        }
+
+        // Language toggle
+        function toggleLanguage() {
+            isGerman = !isGerman;
+            const toggle = document.getElementById('languageToggle');
+            toggle.classList.toggle('active', isGerman);
+            
+            // Update UI text based on language
+            updateUILanguage();
+        }
+
+        function updateUILanguage() {
+            // This would contain all the translations
+            // For brevity, showing just a few examples
+            const translations = {
+                en: {
+                    generateCopy: 'Generate Copy 🚀',
+                    customInput: 'Custom Text Input',
+                    advancedSettings: 'Advanced Settings'
+                },
+                de: {
+                    generateCopy: 'Text Generieren 🚀',
+                    customInput: 'Benutzerdefinierte Texteingabe',
+                    advancedSettings: 'Erweiterte Einstellungen'
+                }
+            };
+
+            const lang = isGerman ? 'de' : 'en';
+            document.getElementById('generateBtn').textContent = translations[lang].generateCopy;
+            // Add more translations as needed
+        }
+
+        // Tab switching
+        function switchTab(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.tab === tabName);
+            });
+
+            // Update tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.toggle('active', content.id === tabName + 'Tab');
+            });
+        }
+
+        // Handle selection data from Figma
+        function handleSelectionData(message) {
+            selectedElements = message.elements;
+            const count = message.count;
+            
+            document.getElementById('selectionCount').textContent = count;
+            
+            const detailsDiv = document.getElementById('selectionDetails');
+            if (count > 0) {
+                detailsDiv.innerHTML = selectedElements.map(el => 
+                    `<div class="selection-item">
+                        <div class="selection-text">${el.text.substring(0, 30)}...</div>
+                    </div>`
+                ).join('');
+                
+                // Auto-fill custom input with selected text
+                const customInput = document.getElementById('customInput');
+                if (customInput.value === '' && selectedElements.length > 0) {
+                    customInput.value = selectedElements.map(el => el.text).join('\n');
+                }
+            } else {
+                detailsDiv.innerHTML = '<div style="color: #999; font-size: 10px;">Select text elements in Figma to auto-fill</div>';
+            }
+        }
+
+        // Generate copy using AI
+        async function generateCopy() {
+            const generateBtn = document.getElementById('generateBtn');
+            const customInput = document.getElementById('customInput').value;
+            const tone = document.getElementById('toneSelect').value;
+            const length = document.getElementById('lengthSelect').value;
+            const targeting = document.getElementById('targetingInput').value;
+
+            if (!customInput.trim()) {
+                alert('Please enter text or select elements in Figma');
+                return;
+            }
+
+            generateBtn.disabled = true;
+            generateBtn.innerHTML = '<span class="spinner"></span>Generating...';
+
+            try {
+                const token = localStorage.getItem('instaffo_token');
+                const response = await fetch(`${serverUrl}/api/generate-copy`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        input: customInput,
+                        tone,
+                        length,
+                        targeting,
+                        language: isGerman ? 'german' : 'english',
+                        selectedElements
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    generatedResults = data.results;
+                    displayResults();
+                    switchTab('results');
+                } else {
+                    alert('Generation failed: ' + (data.message || 'Unknown error'));
+                }
+            } catch (error) {
+                alert('Network error: ' + error.message);
+            }
+
+            generateBtn.disabled = false;
+            generateBtn.innerHTML = 'Generate Copy 🚀';
+        }
+
+        // Display generated results
+        function displayResults() {
+            const container = document.getElementById('resultsContainer');
+            
+            if (generatedResults.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📝</div>
+                        <div>No results yet</div>
+                        <div style="margin-top: 8px; font-size: 11px; color: #999;">
+                            Generate copy to see results here
+                        </div>
+                    </div>`;
+                return;
+            }
+
+            container.innerHTML = generatedResults.map((result, index) => `
+                <div class="result-item">
+                    <div class="result-text">${result.text}</div>
+                    <div class="result-actions">
+                        ${selectedElements.length > 0 ? 
+                            `<button class="btn btn-sm" onclick="applyToSelected(${index})">Apply</button>` : ''
+                        }
+                        <button class="btn btn-secondary btn-sm" onclick="editResult(${index})">Edit</button>
+                        <button class="btn btn-secondary btn-sm" onclick="refineResult(${index})">Refine</button>
+                    </div>
+                </div>
+            `).join('');
+
+            // Add start over button
+            container.innerHTML += `
+                <div style="margin-top: 16px; text-align: center;">
+                    <button class="btn btn-secondary" onclick="startOver()">Start Over</button>
+                </div>`;
+        }
+
+        // Apply result to selected elements
+        function applyToSelected(index) {
+            const result = generatedResults[index];
+            if (selectedElements.length > 0 && result) {
+                // Apply to first selected element (or all if multiple)
+                selectedElements.forEach(element => {
+                    parent.postMessage({ 
+                        pluginMessage: { 
+                            type: 'apply-text', 
+                            nodeId: element.id, 
+                            text: result.text 
+                        } 
+                    }, '*');
+                });
+            }
+        }
+
+        // Edit result
+        function editResult(index) {
+            const result = generatedResults[index];
+            const newText = prompt('Edit the copy:', result.text);
+            if (newText !== null) {
+                generatedResults[index].text = newText;
+                displayResults();
+            }
+        }
+
+        // Refine result with AI
+        async function refineResult(index) {
+            const result = generatedResults[index];
+            const refinement = prompt('How would you like to refine this copy?', 'Make it more engaging');
+            
+            if (!refinement) return;
+
+            try {
+                const token = localStorage.getItem('instaffo_token');
+                const response = await fetch(`${serverUrl}/api/refine-copy`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        originalText: result.text,
+                        refinement,
+                        language: isGerman ? 'german' : 'english'
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    generatedResults[index].text = data.refinedText;
+                    displayResults();
+                } else {
+                    alert('Refinement failed: ' + (data.message || 'Unknown error'));
+                }
+            } catch (error) {
+                alert('Network error: ' + error.message);
+            }
+        }
+
+        // Start over
+        function startOver() {
+            generatedResults = [];
+            document.getElementById('customInput').value = '';
+            switchTab('generate');
+            parent.postMessage({ pluginMessage: { type: 'get-selection' } }, '*');
+        }
+
+        // Handle text applied confirmation
+        function handleTextApplied(message) {
+            if (message.success) {
+                console.log('Text applied successfully to node:', message.nodeId);
+            } else {
+                console.error('Failed to apply text:', message.error);
+            }
+        }
+
+        // Placeholder selection and insertion
+        function selectPlaceholder(item) {
+            document.querySelectorAll('.placeholder-item').forEach(p => {
+                p.classList.remove('selected');
+            });
+            item.classList.add('selected');
+            selectedPlaceholder = item.dataset.placeholder;
+            document.getElementById('insertPlaceholderBtn').disabled = false;
+        }
+
+        function insertPlaceholder() {
+            if (!selectedPlaceholder) return;
+
+            const placeholderTexts = {
+                headline: 'Your Compelling Headline Here',
+                subheading: 'Supporting subheading that elaborates',
+                cta: 'Get Started Now',
+                description: 'Detailed description of your product or service',
+                benefit: 'Key benefit that matters to your audience',
+                feature: 'Important feature highlight',
+                testimonial: '"This changed everything for us!" - Happy Customer',
+                pricing: 'Starting at $99/month',
+                'social-proof': 'Trusted by 10,000+ customers',
+                urgency: 'Limited time offer - Act now!',
+                guarantee: '30-day money-back guarantee',
+                contact: 'Contact us at hello@company.com',
+                disclaimer: '*Terms and conditions apply',
+                tagline: 'Your memorable tagline'
+            };
+
+            const customInput = document.getElementById('customInput');
+            const placeholderText = placeholderTexts[selectedPlaceholder] || selectedPlaceholder;
+            
+            if (customInput.value) {
+                customInput.value += '\n\n' + placeholderText;
+            } else {
+                customInput.value = placeholderText;
+            }
+
+            // Clear selection
+            document.querySelectorAll('.placeholder-item').forEach(p => {
+                p.classList.remove('selected');
+            });
+            selectedPlaceholder = null;
+            document.getElementById('insertPlaceholderBtn').disabled = true;
+
+            // Switch to generate tab
+            switchTab('generate');
+        }
+
+        // Handle all text data (if needed for future features)
+        function handleAllTextData(message) {
+            console.log('All text elements:', message.elements);
+        }
+    </script>
+</body>
+</html>

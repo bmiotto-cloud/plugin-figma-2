@@ -1,0 +1,27 @@
+{
+  "name": "instaffo-copywriter",
+  "version": "1.0.0",
+  "description": "AI-powered copywriting plugin for Figma with German language support",
+  "main": "dist/code.js",
+  "scripts": {
+    "build": "tsc && cp ui.html dist/ && cp manifest.json dist/",
+    "dev": "tsc --watch",
+    "server": "node server.js"
+  },
+  "keywords": ["figma", "plugin", "copywriting", "ai", "openai"],
+  "author": "Instaffo",
+  "license": "MIT",
+  "devDependencies": {
+    "@figma/plugin-typings": "^1.80.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "helmet": "^7.0.0",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "openai": "^4.20.0",
+    "dotenv": "^16.3.1"
+  }
+}
