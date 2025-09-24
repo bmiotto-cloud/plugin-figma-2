@@ -1,4 +1,5 @@
 {
+
   "name": "instaffo-copywriter",
   "version": "1.0.0",
   "description": "AI-powered copywriting plugin for Figma with German language support",
@@ -27,5 +28,31 @@
     "jsonwebtoken": "^9.0.2",
     "openai": "^4.20.0",
     "dotenv": "^16.3.1"
+  }
+}
+=======
+  "name": "figma-copy-plugin",
+  "version": "1.0.0",
+  "description": "Instaffo Copywriter – Figma plugin with AI-powered copy suggestions",
+  "scripts": {
+  "build:ui": "vite build --outDir dist",
+  "build:code": "tsc --project tsconfig.plugin.json",
+  "build": "npm run build:code && npm run build:ui",
+  "dev:ui": "vite"
+},
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-markdown": "^9.0.1"
+  },
+  "devDependencies": {
+    "@figma/plugin-typings": "^1.117.0",
+    "@vitejs/plugin-react": "^4.2.0",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.4.3",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.7"
   }
 }

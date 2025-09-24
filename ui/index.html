@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <meta name="referrer" content="origin" />
+    <title>Instaffo Copywriter</title>
+    <!-- Tailwind will be injected by Vite build -->
+    <link rel="stylesheet" href="/styles.css" />
+    <style>
+      :root {
+        --instaffo-purple: #5e2f82;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui,
+          sans-serif;
+        background: #ffffff;
+        color: #000000;
+        height: 100vh;
+        margin: 0;
+        font-size: 14px;
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      #root {
+        width: 100%;
+        height: 100%;
+        position: relative;
+      }
+
+      /* Loading spinner animation */
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Fallback loading state */
+      .loading-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        flex-direction: column;
+        gap: 16px;
+        padding: 20px;
+      }
+
+      .loading-spinner {
+        width: 28px;
+        height: 28px;
+        border: 3px solid #e5e7eb;
+        border-top: 3px solid var(--instaffo-purple);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      .loading-text {
+        color: #6b7280;
+        font-size: 13px;
+        font-weight: 400;
+        text-align: center;
+      }
+
+      .loading-error {
+        color: #dc2626;
+        font-size: 13px;
+        text-align: center;
+        max-width: 280px;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .loading-spinner {
+          animation: none;
+        }
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--instaffo-purple);
+        outline-offset: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      role="main"
+      aria-label="Instaffo Copywriter Plugin"
+    >
+      <div class="loading-container" role="status" aria-live="polite">
+        <div class="loading-spinner" aria-hidden="true"></div>
+        <p class="loading-text">Loading Instaffo Copywriter...</p>
+        <noscript>
+          <p class="loading-error">
+            JavaScript is required to run this plugin. Please enable JavaScript
+            and try again.
+          </p>
+        </noscript>
+      </div>
+    </div>
+
+    <!-- Vite will inject your React app bundle here -->
+    <script type="module" src="/App.tsx"></script>
+    <script type="module" src="./main.tsx"></script>
+
+    <script>
+      // Fallback error handler
+      window.addEventListener("error", (e) => {
+        console.error("Plugin error:", e.error);
+        const root = document.getElementById("root");
+        if (root) {
+          root.innerHTML = `
+            <div class="loading-container">
+              <p class="loading-error">
+                Plugin failed to load. Please close and reopen the plugin.
+              </p>
+            </div>
+          `;
+        }
+      });
+
+      window.addEventListener("unhandledrejection", (e) => {
+        console.error("Unhandled promise rejection:", e.reason);
+      });
+    </script>
+  </body>
+</html>
